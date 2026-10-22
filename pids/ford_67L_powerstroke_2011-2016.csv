@@ -1,0 +1,31 @@
+Name,ShortName,ModeAndPID,Equation,Min Value,Max Value,Units,Header
+Odometer,ODO,22404C,((A<16)+(B<8)+C)*0.0621371,0,999999,mi,720
+Transmission Fluid Temp,TFT,221E1C,((SIGNED(A)*256)+B)*(9/80)+32,0,300,F,7E1
+Engine Oil Temp,EOT,22F45C,A*(9/5)-40,0,300,F,7E0
+DEF Level,DEF,22F485,A/15*100,0,100,%,7E0
+DEF Volume,DEFL,220487,((A*256)+B)/1000,0,30,L,7E0
+Fan Speed,FAN,220702,A*100*0.25,0,5000,rpm,7E0
+Current Gear,GEAR,221E12,A,0,6,,7E1
+DPF Soot Load,SOOT,22042C,((((A*256)+B)*(100/65535))-1)/1.75*100,0,120,%,7E0
+DPF Soot Mass,SOOTG,22042C,((A*256)+B)*(100/65535)-1,0,3,g/L,7E0
+Fuel Rail Pressure,FRP,22F46D,((D<16)+(E<8)+F)/2560,0,2500,bar,7E0
+Fuel Pressure Control,FPC,2203C3,A/2,0,100,%,7E0
+Coolant Temp 2,ECT2,22F467,(A-40)*(9/5)+32,0,300,F,7E0
+Exhaust Back Pressure,EBP,221445,((B*256)+C)*0.03625,0,60,psi,7E0
+Tire Pressure LF,TP LF,222813,(((256*A)+B)/3+22/3)*0.145,0,100,psi,726
+Tire Pressure RF,TP RF,222814,(((256*A)+B)/3+22/3)*0.145,0,100,psi,726
+Tire Pressure RR,TP RR,222815,(((256*A)+B)/3+22/3)*0.145,0,100,psi,726
+Tire Pressure LR,TP LR,222816,(((256*A)+B)/3+22/3)*0.145,0,100,psi,726
+Turbo Speed (custom),TRBRPM,0174,(B*256)+C,0,200000,rpm,7E0
+VGT Position Actual (custom),VGT,0171,C*100/255,0,100,%,7E0
+VGT Position Commanded (custom),VGTCMD,0171,B*100/255,0,100,%,7E0
+DPF Inlet Temp (custom),DPFIN,017C,(((B*256)+C)/10-40)*(9/5)+32,0,1600,F,7E0
+DPF Outlet Temp (custom),DPFOUT,017C,(((D*256)+E)/10-40)*(9/5)+32,0,1600,F,7E0
+NOx Sensor 1 (custom),NOX1,0183,(B*256)+C,0,3000,ppm,7E0
+NOx Sensor 2 (custom),NOX2,0183,(D*256)+E,0,3000,ppm,7E0
+DEF Tank Level (custom),DEFLVL,0185,C*100/255,0,100,%,7E0
+DEF Temperature (custom),DEFTMP,0185,(B-40)*(9/5)+32,-40,200,F,7E0
+Commanded EGR (custom),EGRCMD,012C,A*100/255,0,100,%,7E0
+EGR Error (custom),EGRERR,012D,A*100/128-100,-100,100,%,7E0
+EGR Temp Sensor 1 (custom),EGRT1,016B,(B-40)*(9/5)+32,-40,900,F,7E0
+EGR Temp Sensor 2 (custom),EGRT2,016B,(C-40)*(9/5)+32,-40,900,F,7E0

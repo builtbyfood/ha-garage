@@ -1,0 +1,3 @@
+generator/out/
+__pycache__/
+*.db

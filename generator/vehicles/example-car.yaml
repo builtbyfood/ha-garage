@@ -1,0 +1,54 @@
+# Gas vehicle example (no DPF/DEF, standard-PID only). Copy and edit.
+slug: car
+name: "2019 Toyota Tacoma 3.5L"
+vin: "3TMXXXXXXXXXXXXXX"
+dashboard_url: car
+notify: notify.mobile_app_your_phone
+torque_email: tacoma@example.com
+
+torque:
+  odometer:        ""                                   # add a cluster odometer PID later if your make has one
+  rpm:             sensor.car_engine_rpm
+  coolant_temp:    sensor.car_engine_coolant_temperature
+  oil_temp:        ""
+  trans_temp:      ""                                   # Toyota: custom PID on 7E1 — see docs/02
+  fuel_level:      sensor.car_fuel_level_from_engine_ecu
+  voltage:         sensor.car_voltage_control_module
+  engine_load:     sensor.car_engine_load
+  run_time:        sensor.car_run_time_since_engine_start
+  ambient:         sensor.car_ambient_air_temp
+  boost:           ""
+  map:             sensor.car_intake_manfold_abs_pressure_a
+  mpg_long:        sensor.car_miles_per_gallon_long_term_average
+  fuel_rate:       sensor.car_fuel_rate_direct_from_ecu
+  egt1: ""
+  egt2: ""
+  egt3: ""
+  egt4: ""
+  dpf_delta_p: ""
+  dpf_soot: ""
+  def_level: ""
+  tires: []
+
+diesel: false
+tire_alerts: false
+
+items:
+  - [oil,             "Engine Oil & Filter",          10000,  365,  "mdi:oil"]
+  - [tire_rotation,   "Tire Rotation",                5000,   180,  "mdi:tire"]
+  - [air_filter,      "Engine Air Filter",            30000,  0,    "mdi:air-filter"]
+  - [cabin_filter,    "Cabin Air Filter",             15000,  365,  "mdi:air-filter"]
+  - [coolant,         "Coolant",                      100000, 3650, "mdi:coolant-temperature"]
+  - [trans_fluid,     "Transmission Fluid",           60000,  0,    "mdi:car-shift-pattern"]
+  - [rear_diff,       "Rear Differential Fluid",      30000,  0,    "mdi:cog"]
+  - [front_diff_tcase,"Front Diff + Transfer Case",   30000,  0,    "mdi:cog-outline"]
+  - [spark_plugs,     "Spark Plugs",                  120000, 0,    "mdi:flash"]
+  - [brake_fluid,     "Brake Fluid",                  0,      1095, "mdi:car-brake-fluid-level"]
+  - [brake_check,     "Brakes Checked",               15000,  365,  "mdi:car-brake-alert"]
+  - [batteries,       "Battery Replacement",          0,      1460, "mdi:car-battery"]
+  - [battery_check,   "Battery Checked",              0,      180,  "mdi:battery-heart-variant"]
+  - [suspension_check,"Suspension & Steering Checked",15000,  365,  "mdi:car-cruise-control"]
+
+alerts:
+  voltage_low: 12.2
+  fuel_low_pct: 15

@@ -1,0 +1,34 @@
+name: Parts Intake
+version: "0.2.0"
+slug: parts_intake
+description: Watches a media folder for photos, decodes barcodes and OCRs part numbers locally, and fires a Home Assistant event with the result.
+url: https://github.com/YOUR-GITHUB/ha-garage
+arch: [amd64, aarch64]
+startup: services
+boot: auto
+init: false
+homeassistant_api: true
+map:
+  - type: media
+    read_only: false
+options:
+  watch_dir: /media/parts_intake
+  processed_subdir: processed
+  event_type: parts_intake
+  poll_seconds: 2
+  ocr_lang: eng
+  upc_lookup: true
+  keep_originals: true
+  extra_patterns: []
+  log_level: info
+schema:
+  watch_dir: str
+  processed_subdir: str
+  event_type: str
+  poll_seconds: int(1,60)
+  ocr_lang: str
+  upc_lookup: bool
+  keep_originals: bool
+  extra_patterns:
+    - str
+  log_level: list(debug|info|warning|error)

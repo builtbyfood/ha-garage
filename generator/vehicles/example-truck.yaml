@@ -1,0 +1,64 @@
+# One file per vehicle. Copy this, edit, then:  python3 gen.py vehicles/<your-file>.yaml
+# Everything in Home Assistant is prefixed with `slug` (sensor.<slug>_..., input_number.<slug>_...).
+slug: truck                      # short, lowercase, no spaces  (e.g. f350, tacoma, e55)
+name: "2016 Ford F-350 6.7L"     # shown on the dashboard
+vin: "1FTXXXXXXXXXXXXXX"         # optional, informational only
+dashboard_url: truck             # the dashboard's URL slug in HA (Settings > Dashboards)
+notify: notify.mobile_app_your_phone     # HA mobile app notify target
+torque_email: you@example.com    # must match Torque > Data Logging & Upload > User Email Address
+
+# Torque sensor entity_ids differ per vehicle. After the first upload, Settings > Entities,
+# search your slug, and fill these in. Leave blank ("") anything your vehicle doesn't report.
+torque:
+  odometer:        sensor.truck_odometer                 # custom PID (see pids/)
+  rpm:             sensor.truck_engine_rpm
+  coolant_temp:    sensor.truck_engine_coolant_temperature
+  oil_temp:        sensor.truck_engine_oil_temp
+  trans_temp:      sensor.truck_transmission_fluid_temp
+  fuel_level:      sensor.truck_fuel_level_from_engine_ecu
+  voltage:         sensor.truck_voltage_control_module
+  engine_load:     sensor.truck_engine_load
+  run_time:        sensor.truck_run_time_since_engine_start
+  ambient:         sensor.truck_ambient_air_temp
+  boost:           sensor.truck_turbo_boost_vacuum_gauge
+  map:             sensor.truck_intake_manfold_abs_pressure_a
+  mpg_long:        sensor.truck_miles_per_gallon_long_term_average
+  fuel_rate:       sensor.truck_fuel_rate_direct_from_ecu
+  # diesel-only (leave "" for gas)
+  egt1:            sensor.truck_exhaust_gas_temp_bank_1_sensor_1
+  egt2:            sensor.truck_exhaust_gas_temp_bank_1_sensor_2
+  egt3:            sensor.truck_exhaust_gas_temp_bank_1_sensor_3
+  egt4:            sensor.truck_exhaust_gas_temp_bank_1_sensor_4
+  dpf_delta_p:     sensor.truck_dpf_bank_1_delta_pressure
+  dpf_soot:        sensor.truck_dpf_soot_load
+  def_level:       sensor.truck_def_level
+  tires: [sensor.truck_tire_pressure_lf, sensor.truck_tire_pressure_rf, sensor.truck_tire_pressure_lr, sensor.truck_tire_pressure_rr]
+
+diesel: true                      # adds DPF / regen / DEF cards and alerts
+tire_alerts: true                 # needs the 4 tire entities above
+
+# Maintenance items: [key, label, miles interval, days interval (0 = none), icon]
+# Keys ending in _check are inspections; the Garage add-on advances them from logged inspections.
+items:
+  - [oil,             "Engine Oil & Filter",          7500,   180,  "mdi:oil"]
+  - [fuel_filters,    "Fuel Filters",                 15000,  180,  "mdi:filter"]
+  - [air_filter,      "Engine Air Filter",            45000,  0,    "mdi:air-filter"]
+  - [tire_rotation,   "Tire Rotation",                7500,   180,  "mdi:tire"]
+  - [coolant,         "Coolant Flush",                105000, 2190, "mdi:coolant-temperature"]
+  - [trans_fluid,     "Transmission Fluid & Filter",  150000, 0,    "mdi:car-shift-pattern"]
+  - [rear_diff,       "Rear Differential Fluid",      50000,  0,    "mdi:cog"]
+  - [front_diff_tcase,"Front Diff + Transfer Case",   150000, 0,    "mdi:cog-outline"]
+  - [brake_fluid,     "Brake Fluid",                  0,      1095, "mdi:car-brake-fluid-level"]
+  - [brake_check,     "Brakes Checked",               15000,  365,  "mdi:car-brake-alert"]
+  - [batteries,       "Battery Replacement",          0,      1460, "mdi:car-battery"]
+  - [battery_check,   "Battery Checked",              0,      180,  "mdi:battery-heart-variant"]
+  - [suspension_check,"Suspension & Steering Checked",15000,  365,  "mdi:car-cruise-control"]
+
+alerts:                            # in the units Torque reports
+  trans_temp_high: 220
+  oil_temp_high: 250
+  egt1_high: 1400
+  voltage_low: 12.2
+  fuel_low_pct: 15
+  def_low_pct: 15
+  tire_spread_psi: 6

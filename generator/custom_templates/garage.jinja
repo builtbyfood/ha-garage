@@ -1,0 +1,27 @@
+{# custom_templates/garage.jinja — shared math for the maintenance sensors. One copy serves every vehicle. #}
+
+{% macro _miles_used(p, key) -%}
+{{ states('input_number.' ~ p ~ '_odometer')|float(0) - states('input_number.' ~ p ~ '_' ~ key ~ '_last_miles')|float(0) }}
+{%- endmacro %}
+
+{% macro _days_used(p, key) -%}
+{%- set d = states('input_datetime.' ~ p ~ '_' ~ key ~ '_last_date') -%}
+{%- if d in ['unknown','unavailable',''] -%}0{%- else -%}
+{{ (now().date() - strptime(d, '%Y-%m-%d').date()).days }}
+{%- endif -%}
+{%- endmacro %}
+
+{% macro miles_remaining(p, key, miles_int) -%}
+{%- if miles_int|int > 0 -%}{{ (miles_int|int - _miles_used(p, key)|float)|round(0)|int }}{%- else -%}none{%- endif -%}
+{%- endmacro %}
+
+{% macro days_remaining(p, key, days_int) -%}
+{%- if days_int|int > 0 -%}{{ days_int|int - _days_used(p, key)|int }}{%- else -%}none{%- endif -%}
+{%- endmacro %}
+
+{# percent of interval consumed = max(miles%, days%); 100+ means due #}
+{% macro interval_used(p, key, miles_int, days_int) -%}
+{%- set m = (_miles_used(p, key)|float / miles_int * 100) if miles_int|int > 0 else 0 -%}
+{%- set t = (_days_used(p, key)|int / days_int * 100) if days_int|int > 0 else 0 -%}
+{{ [m, t]|max|round(0)|int }}
+{%- endmacro %}

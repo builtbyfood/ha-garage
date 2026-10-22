@@ -1,0 +1,27 @@
+name: Garage
+version: "0.2.0"
+slug: garage
+description: Vehicle history database — service log, components, mod planning, inspections, Carfax import — with a web UI and Home Assistant sync.
+url: https://github.com/YOUR-GITHUB/ha-garage
+arch: [amd64, aarch64]
+startup: services
+boot: auto
+init: false
+homeassistant_api: true
+ingress: true
+ingress_port: 8099
+panel_icon: mdi:garage
+panel_title: Garage
+map:
+  - type: share
+    read_only: false
+options:
+  vehicle_slug: truck
+  vehicle_name: "My Truck"
+  db_path: /share/garage/truck.db
+  log_level: info
+schema:
+  vehicle_slug: str
+  vehicle_name: str
+  db_path: str
+  log_level: list(debug|info|warning|error)
